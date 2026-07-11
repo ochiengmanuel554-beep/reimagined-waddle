@@ -12,8 +12,14 @@ async function loadLiveFixtures() {
       }
     );
 
-    const data = await response.json();
+    
+const data = await response.json();
+console.log(data);
 
+if (!data.response) {
+  document.getElementById("matches").innerHTML = "<h2>Unable to load live fixtures.</h2>";
+  return;
+}
     const matches = document.getElementById("matches");
 
     if (!data.response || data.response.length === 0) {
