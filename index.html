@@ -1023,7 +1023,51 @@ searchResults.addEventListener("click", () => searchResults.classList.remove("op
 <!-- Official embed scripts (no login required, public embeds only) -->
 <script async src="https://www.instagram.com/embed.js"></script>
 <script async src="https://platform.twitter.com/widgets.js"></script>
+<script>
+const NEWS_API_KEY = "pub_74a7ef4e6a214e58aff61da0f9078551";
 
+async function loadFootballNews() {
+  const container = document.getElementById("news-container");
+
+  try {
+    container.innerHTML = "<p>Loading latest football news...</p>";
+
+    const response = await fetch(
+      `https://newsdata.io/api/1/latest?apikey=${NEWS_API_KEY}&q=football&language=en`
+    );
+
+    const data = await response.json();
+
+    if (!data.results || data.results.length === 0) {
+      container.innerHTML = "<p>No football news available.</p>";
+      return;
+    }
+
+    container.innerHTML = data.results.slice(0, 10).map(news => `
+      <div class="fixture-card">
+        <h3>${news.title}</h3>
+        <p>${news.description || "Click below to read the full story."}</p>
+        <p style="margin-top:10px;">
+          <a href="${news.link}" target="_blank" style="color:gold;">
+            Read Full Story →
+          </a>
+        </p>
+      </div>
+    `).join("");
+
+  } catch (error) {
+    console.error(error);
+    container.innerHTML =
+      "<p>Unable to load football news at the moment.</p>";
+  }
+}
+
+// Load news immediately
+loadFootballNews();
+
+// Refresh every 5 minutes
+setInterval(loadFootballNews, 300000);
+</script>
 <div id="matches"></div>
 <script src="script.js"></script>
 </body>
