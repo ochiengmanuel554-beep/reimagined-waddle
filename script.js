@@ -1,4 +1,4 @@
-const API_KEY = "8fed889517eb25c010399e1e5c91dd01";
+⁵const API_KEY = "8fed889517eb25c010399e1e5c91dd01";
 
 async function loadLiveFixtures() {
   try {
@@ -23,9 +23,25 @@ async function loadLiveFixtures() {
 
     matches.innerHTML = data.response.map(match => `
       <div class="match">
-        <h3>${match.teams.home.name} vs ${match.teams.away.name}</h3>
-        <p>${match.goals.home} - ${match.goals.away}</p>
-        <p>${match.fixture.status.elapsed}'</p>
+        
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+  <div style="text-align:center;">
+    <img src="${match.teams.home.logo}" width="50" height="50">
+    <p>${match.teams.home.name}</p>
+  </div>
+
+  <div style="text-align:center;">
+    <h3>VS</h3>
+    <p>${match.goals.home} - ${match.goals.away}</p>
+    <small>${match.fixture.status.elapsed}'</small>
+  </div>
+
+  <div style="text-align:center;">
+    <img src="${match.teams.away.logo}" width="50" height="50">
+    <p>${match.teams.away.name}</p>
+  </div>
+</div>  
+      
       </div>
     `).join("");
 
