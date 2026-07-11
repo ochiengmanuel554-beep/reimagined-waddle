@@ -1,4 +1,4 @@
-⁵const API_KEY = "8fed889517eb25c010399e1e5c91dd01";
+const API_KEY = "8fed889517eb25c010399e1e5c91dd01";
 
 async function loadLiveFixtures() {
   try {
