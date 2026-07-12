@@ -587,17 +587,36 @@ highlights.forEach(item => {
    ============================================================ */
 
 // TRANSFER RUMORS — level: "here-we-go" | "advanced" | "links"
-const RUMORS = [
-  { player:"Granit Xhaka", club:"Chelsea (from Sunderland)", summary:"Chelsea have reportedly reached a verbal agreement with the midfielder, marking a big step toward a summer switch to Stamford Bridge.", level:"advanced", sourceName:"Fabrizio Romano", sourceUrl:"https://x.com/FabrizioRomano", posted:"2 hours ago" },
-  { player:"Aurelien Tchouameni", club:"Staying at Real Madrid", summary:"Tchouameni looks set to commit his future to Madrid on improved terms, easing speculation that had linked him elsewhere.", level:"advanced", sourceName:"BeSoccer", sourceUrl:"https://www.besoccer.com/new/latest-transfer-news-football-rumours-confirmed-1412436", posted:"5 hours ago" },
-  { player:"Denzel Dumfries", club:"Confirmed at Real Madrid", summary:"Madrid have officially completed the signing of the Dutch full-back, who joins on a deal running to 2030 to bolster the right side of defence.", level:"here-we-go", sourceName:"BeSoccer", sourceUrl:"https://www.besoccer.com/new/latest-transfer-news-football-rumours-confirmed-1412436", posted:"1 day ago" },
-  { player:"Enzo Fernandez", club:"Chelsea exit talk denied", summary:"Real Madrid issued an official statement denying any move for Fernandez, while Chelsea are said to be lining up Tchouameni or Arda Guler as contingency options if he leaves.", level:"links", sourceName:"Sport", sourceUrl:"https://www.skysports.com/football", posted:"2 days ago" },
-  { player:"Christos Tzolis", club:"Linked with Arsenal", summary:"Arsenal are reportedly in the mix for the winger, while AC Milan are separately said to be talking to Luka Modric.", level:"links", sourceName:"Transfermarkt", sourceUrl:"https://www.transfermarkt.us/", posted:"1 day ago" },
-  { player:"Sandro Tonali", club:"Exit rumours at Newcastle", summary:"Reports continue to link Tonali with a London move as Arsenal and Tottenham are both said to be monitoring his situation.", level:"links", sourceName:"BeSoccer", sourceUrl:"https://www.besoccer.com/new/latest-transfer-news-football-rumours-confirmed-1412436", posted:"1 day ago" },
-  { player:"Jaidon Anthony", club:"Brentford (from Burnley)", summary:"Brentford are reportedly closing in on the winger after reaching an agreement in principle with Burnley.", level:"advanced", sourceName:"Fabrizio Romano", sourceUrl:"https://x.com/FabrizioRomano", posted:"2 days ago" },
-  { player:"Franck Kessie", club:"Linked with Juventus", summary:"Kessie has hinted strongly at a return to European football, with Juventus reportedly among the clubs monitoring him ahead of the World Cup.", level:"links", sourceName:"BeSoccer", sourceUrl:"https://www.besoccer.com/new/latest-transfer-news-football-rumours-confirmed-1412436", posted:"3 days ago" },
-  { player:"Julian Alvarez", club:"Interest from Barcelona (if deal collapses)", summary:"Barcelona are said to be considering Eli Junior Kroupi as a fallback option if they're unable to land Alvarez this summer.", level:"links", sourceName:"Sport", sourceUrl:"https://www.besoccer.com/new/latest-transfer-news-football-rumours-confirmed-1412436", posted:"3 days ago" }
-];
+let RUMORS = [];
+
+async function loadTransferNews() {
+  try {
+    const response = await fetch(
+      `https://newsdata.io/api/1/latest?apikey=${NEWS_API_KEY}&q=football transfer&language=en`
+    );
+
+    const data = await response.json();
+
+    if (!data.results) return;
+
+    RUMORS = data.results.slice(0,8).map(news => ({
+      player: news.title,
+      club: news.source_name || "Transfer News",
+      summary: news.description || "Click to read more.",
+      level: "advanced",
+      sourceName: news.source_name || "NewsData",
+      sourceUrl: news.link,
+      posted: "Live"
+    }));
+
+    renderRumors("all");
+
+  } catch(err) {
+    console.log(err);
+  }
+}
+
+loadTransferNews();
 
 // TRAINING & INJURY STATUS — tag: "fit" | "injured" | "doubt"
 const STATUS = [
