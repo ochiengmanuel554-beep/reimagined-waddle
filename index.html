@@ -596,7 +596,7 @@ async function loadTransferNews() {
     );
 
     const data = await response.json();
-
+console.log(data);
     if (!data.results) return;
 
     RUMORS = data.results.slice(0,8).map(news => ({
