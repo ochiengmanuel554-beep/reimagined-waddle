@@ -312,6 +312,46 @@ footer{text-align:center; padding:36px 20px; border-top:1px solid var(--line); f
   .ticker{animation:none;}
   .rumor-card{animation:none; opacity:1; transform:none;}
   html{scroll-behavior:auto;}
+}/* BBC PRO STYLE - SAFE ADD */
+header.nav, .nav-inner {
+  background: #0a0a2e !important;
+  border-bottom: 4px solid #00ff88 !important;
+  box-shadow: 0 4px 15px rgba(0, 204, 68, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nav a, .nav li a {
+  color: #ffffff !important;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.nav a:hover, .nav li a:hover {
+  background-color: #00ff88 !important;
+  color: #000 !important;
+}
+
+/* Mobile friendly like BBC */
+@media (max-width: 768px) {
+  .nav-inner {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 </style>
 </head>
